@@ -1,0 +1,31 @@
+<p>todo works!</p>
+<mat-card>
+    <form [formGroup]='todoForm' (ngSubmit)='onSubmit()'>
+        <mat-form-field>
+            <input type="text" matInput formControlName='todoName' placeholder="Todo name">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName = 'todoDescription' placeholder="Todo Description">
+        </mat-form-field>
+
+        <button type='submit' mat-stroked-button >Submit Todo</button>
+    </form>
+</mat-card>
+
+
+<button mat-raised-button (click)="showTodos()">Show Todos</button>
+
+<mat-card *ngFor="let todo of todos; let i = index">
+    <div>
+        <ul>
+            <li>Todo Index: {{ i }}</li>
+            <li>Todo name: {{ todo.todoName }}</li>
+            <li>Todo Description: {{ todo.todoDescription }}</li>
+            <li>
+                <button mat-raised-button (click)="openDialog(i, todo.id)">Update Todo</button>
+                <span><button mat-raised-button (click)="deleteInfo(todo.id)">Delete Todo</button></span>
+            </li>
+        </ul>
+
+    </div>
+</mat-card>

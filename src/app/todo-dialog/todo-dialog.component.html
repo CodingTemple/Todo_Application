@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Update Todo for {{ data.id }}</h1>
+<form [formGroup]="todoFormDialog">
+    <mat-form-field>
+        <input type="text" matInput formControlName="todoName" placeholder="Update Todo Name">
+    </mat-form-field>
+    <mat-form-field>
+        <input type="text" matInput formControlName = "todoDescription" placeholder="Update Todo Description">
+    </mat-form-field>
+</form>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button mat-dialog-close="sendUpdate()">Update</button>
+</div>

@@ -1,0 +1,61 @@
+<!-- Email/ Password Login Form HTML-->
+<mat-card>
+<!-- Creation of a new account button -->
+<div *ngIf="isSignup">
+    <h3>Create Account</h3>
+    <!--Button will call the changeType function when clicked-->
+    <!--Which will change the value and display specific HTML based on the login view-->
+    <button mat-stroked-button (click)="changeType('login')">Returning User?</button>
+</div>
+
+<!--Display if on the signin HTML / New User Signup Button-->
+<div *ngIf="isLogin">
+    <h3>Sign In</h3>
+    <button size="small" mat-stroked-button (click)="changeType('signup')">New User?</button>
+
+</div>
+
+<!--Display if Type is isPasswordReset / User Reset Password button-->
+<div *ngIf = 'isPasswordReset'>
+    <h3>Reset Password</h3>
+    <button size='small' mat-button (click)="changeType('login')">Go Back</button>
+</div>
+
+<!--Email/Password Form-->
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<!--Email Field for the Form-->
+<mat-form-field [color]="email.valid && 'accent'">
+    <input type="email" matInput formControlName='email' placeholder="email">
+    <mat-error *ngIf="email.invalid && email.dirty">You must enter a valid email address!</mat-error>
+</mat-form-field>
+
+<!--Password Field for the Form-->
+<mat-form-field [color]="email.valid && 'accent'" *ngIf="!isPasswordReset">
+    <input type="password" matInput formControlName = 'password' placeholder="password">
+    <mat-error *ngIf="password.invalid && password.dirty">Password Must Be at least 6 characters long!</mat-error>
+</mat-form-field>
+
+<!--Password Match Field for the Form-->
+<mat-form-field [color]="passwordDoesMatch ? 'accent': 'warn'" *ngIf="isSignup">
+    <input type="password" matInput formControlName="passwordConfirm" placeholder="Confirm Password">
+    <mat-error *ngIf="passwordConfirm.dirty && !passwordDoesMatch">Password does not match!</mat-error>
+</mat-form-field>
+
+<mat-error>{{ serverMessage }}</mat-error>
+
+<!--Button for sending the reset Email for password reset-->
+<button *ngIf="isPasswordReset" mat-stroked-button type="submit" [disabled]='loading'>Send Reset Email</button>
+
+
+<!--Submit Button for the form-->
+<button *ngIf='!isPasswordReset' mat-stroked-button type="submit" [disabled]="form.invalid || !passwordDoesMatch || loading">Submit</button>
+
+<!--Button for Forgot Password-->
+<!--Button will show only for Reset Password-->
+<button mat-raised-button *ngIf="isLogin && !isPasswordReset" (click)="changeType('reset')">Forgot Password</button>
+</form>
+
+
+
+</mat-card>
